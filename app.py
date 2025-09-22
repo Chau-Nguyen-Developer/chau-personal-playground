@@ -12,14 +12,15 @@ app = Flask(__name__)
 def home():
     return "Hello, Flask."
 
-@app.route("/hello/<name>")
-@app.route("/hello/")
+
 # NEW HELLO_THERE FUNCTION
 # Modify the hello_there function to use render_template() function inside 
 # to load a template and apply the named values (and add a route to recognize the case without a name).
 # Function render_template() assumes that the first argument is relative to the "templates" folder. 
 # We can see that the below code is much simpler now. It only concerned with data values, 
-# becuase the markup and formatting is all contained in template. 
+# becuase the markup and formatting is all contained in template.
+@app.route("/hello/<name>")
+@app.route("/hello/")
 def hello_there(name = None):
     return render_template(
         "hello_there.html", 
@@ -27,6 +28,11 @@ def hello_there(name = None):
         date = datetime.now()
     )
 
+# Add a function with the route /api/data that returns the static data
+# file using the send_static_file() method. 
+@app.route("/api/data")
+def get_data():
+    return app.send_static_file("data.json")
 
 
 #--------------------------------------------------------
